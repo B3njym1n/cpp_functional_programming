@@ -98,13 +98,12 @@
 
 ##### Functional Parser Implementation
 
-- Parser Combinator [C++ 元编程之 Parser Combinator](https://netcan.github.io/2020/09/16/C-%E5%85%83%E7%BC%96%E7%A8%8B%E4%B9%8BParser-Combinator/)
-  借助 C++ 的 constexpr + lambda 能力，可以轻而易举的构造 Parser Combinator，实现一个 Parser 也没那么繁杂了
+- Parser Combinator [C++ 元编程之 Parser Combinator](https://netcan.github.io/2020/09/16/C-%E5%85%83%E7%BC%96%E7%A8%8B%E4%B9%8BParser-Combinator/) 借助 C++ 的 constexpr + lambda 能力，可以轻而易举的构造 Parser Combinator，实现一个 Parser 也没那么繁杂了
 
-  > 没有类似 haskell parsec 的 monad parser
+  > 没有类似 haskell parsec 的 monad parser gcc13 c++17 编译通过 msvc 好像不行
 
       #pragma once
-      #include <type_traits> // std::is_same_v
+      #include <type_traits> // std::is_same_v std::decay_t
       #include <utility> // std::forward ...
       #include <string>
       #include <string_view>
@@ -123,9 +122,11 @@
           template<typename>
           struct dump;
 
+          // Partial template specialization
+          // below ParserTrait is primary template
           template<typename T>
           class ParserTrait {
-              using TDecay = std::decay_t<T>;
+              using TDecay = std::decay_t<T>; // performs the type conversions equivalent to the ones performed when passing function arguments by value.
           public:
               using type = typename ParserTrait<decltype(&TDecay::operator())>::type;
           };
