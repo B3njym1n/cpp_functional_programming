@@ -265,9 +265,6 @@ This is as if we had declared **_fmap_** like so:
       }
 ```
 
-- Maybe
-
-- Monad IO
 
 ##### Functional Parser Implementation
 
@@ -275,7 +272,7 @@ This is as if we had declared **_fmap_** like so:
 
   > 没有类似 haskell parsec 的 monad parser gcc13 c++17 编译通过 msvc 好像不行
 
-````C++
+```C++
       #pragma once
       #include <type_traits> // std::is_same_v std::decay_t
       #include <utility> // std::forward ...
